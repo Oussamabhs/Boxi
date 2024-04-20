@@ -24,20 +24,34 @@
                 </ul>
               </li>
 
-              <?php if ( isset($_SESSION ['nom']) ) {
-                print '<li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="profile.php">profile</a>
-              </li>';
-
-              } else{
-                print '<li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="connexion.php">connexion</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="registre.php">registre</a>
-              </li>';
-              } 
-              ?>
+              <?php 
+// Check if the session variable 'nom' is set, indicating that the user is logged in
+if (isset($_SESSION['nom'])) {
+    // User is logged in
+    print '<li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="profile.php">Profile</a>
+           </li>';
+    // Check if the 'panier' session variable is set and is an array
+    if (isset($_SESSION['panier']) && is_array($_SESSION['panier'])) {
+        print '<li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="panier.php">Panier</a>
+               </li>';
+    } else {
+        // 'panier' session variable is not set or not an array, indicating an empty cart
+        print '<li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="panier.php">Panier <span>(0)</span></a>
+               </li>';
+    }
+} else {
+    // User is not logged in
+    print '<li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="connexion.php">Connexion</a>
+           </li>
+           <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="registre.php">Registre</a>
+           </li>';
+}
+?>
               
             </ul>
             <form class="d-flex" action ="index.php" method="POST">
